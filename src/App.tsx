@@ -1,17 +1,38 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
-export default function App() {
+import { Hero } from '@/components/Hero';
+import { Features } from '@/components/Features';
+import { Pricing } from '@/components/Pricing';
+import { Testimonials } from '@/components/Testimonials';
+import { Footer } from '@/components/Footer';
+
+
+interface RootLayoutProps {
+  children?: React.ReactNode;
+}
+
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const { theme } = useTheme();
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold py-16 text-center">
-          The user wants a modern landing page that includes pricing information. The application should be built using React and TypeScript.
-        </h1>
-        <p className="text-center text-muted-foreground mb-8">
-          Your AI-generated landing page is ready! Components will be imported below.
-        </p>
-        {/* Generated sections will be imported and rendered here */}
+    <div
+      className={cn(
+        'flex flex-col min-h-screen bg-background text-foreground',
+        theme === 'dark' ? 'dark' : 'light',
+      )}
+    >
+      <main className="flex-1">
+        <Hero />
+        <Features />
+        <Pricing />
+        <Testimonials />
+        {children}
       </main>
+      <Footer />
     </div>
   );
-}
+};
+
+export default RootLayout;
